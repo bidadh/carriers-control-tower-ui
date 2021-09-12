@@ -1,0 +1,143 @@
+asyncapi: 2.0.0
+info:
+  title: IoT Events API
+  version: 1.0.0
+  description: This is cathookie webhook API. It uses the ASYNC API Specification - check it out here [https://www.asyncapi.com/docs/specifications/2.0.0]
+  termsOfService: https://webhooks.mycompany.com/terms/
+  contact:
+    name: My Webhook API Support
+    url: https://mysupport.mycompany.com/
+    email: support@mycompany.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  production:
+    # this url is not important. Only really need this section for the security part.
+    url: webhooks.mycompany.com
+    protocol: http
+    description: This is "My Company" webhook instance.
+
+channels:
+  DevicePositionUpdate:
+    description: When asset ENTERED to a geofence location
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  DeviceRoute:
+    description: When asset ENTERED to a geofence location
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  DeliveredAt:
+    description: When asset ENTERED to a geofence location
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  TEMPERATURE_APPROACHING:
+    description: When temperature approaching it's target
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  TEMPERATURE_EXCEEDED:
+    description: When temperature exceeded it's target
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  DG_ALERT:
+    description: When there is an alert for an asset
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  SECURITY_ALERT:
+    description: When there is a security alert for an asset
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  PERSONAL_ALERT:
+    description: When there is an alert for an asset
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+  SHOCK:
+    description: When there is a SHOCK alert for an asset
+    subscribe:
+      tags:
+        - name: TruckEvent
+      message:
+        $ref: '#/components/messages/TruckEvent'
+components:
+  messages:
+    TruckEvent:
+      contentType: application/json
+      payload:
+        type: "object"
+        required:
+          - "name"
+          - "photoUrls"
+        properties:
+          id:
+            type: "integer"
+            format: "int64"
+          category:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                format: "int64"
+              name:
+                type: "string"
+          photoUrls:
+            type: "array"
+            items:
+              type: "string"
+          tags:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+                name:
+                  type: "string"
+          status:
+            type: "string"
+            description: "event status"
+            enum:
+              - "entered"
+              - "exited"
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+  messageTraits:
+    commonHeaders:
+      # headers
+      headers:
+        type: object
+        properties:
+          # header name
+          trace-id:
+            type: string
+            format: uuid
+            description: The Trace ID of the original message.
+          span-id:
+            type: string
+            format: uuid
+            description: The Span ID for the specific subscription message.
+

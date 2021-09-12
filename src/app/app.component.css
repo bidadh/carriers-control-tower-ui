@@ -1,0 +1,9 @@
+.setting{
+  padding-left: 10px;
+}
+.search input{
+  z-index: 1;
+}
+.search search-btn{
+  z-index: 2;
+}

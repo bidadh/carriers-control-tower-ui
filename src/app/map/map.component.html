@@ -1,0 +1,20 @@
+<google-map (mapClick)="addMarker($event)"
+            (mapMousemove)="move($event)"
+            (mapRightclick)="removeLastMarker()"
+            [center]="center"
+            [zoom]="zoom"
+            height="400px"
+            width="750px">
+  <map-marker #marker
+              (mapClick)="openInfoWindow(marker)"
+              *ngFor="let markerPosition of markerPositions"
+              [options]="markerOptions"
+              [position]="markerPosition"></map-marker>
+  <map-polygon
+    *ngFor="let locationPath of locationPaths$ | async"
+    [options]="locationOptions"
+    [paths]="locationPath"
+  >
+  </map-polygon>
+  <map-info-window>Info Window content</map-info-window>
+</google-map>

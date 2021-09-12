@@ -1,0 +1,17 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.row .content .table{
+  background-color: var(--bs-light);
+}
+
+.color-red {
+  color: var(--bs-red);
+}
+.color-yellow {
+  color: var(--bs-yellow);
+}
+.color-gray {
+  color: var(--bs-gray);
+}
+.color-green {
+  color: var(--bs-green);
+}

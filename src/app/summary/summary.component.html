@@ -1,0 +1,56 @@
+<div class="bg-white p-2 mb-1">
+  <div class="header pb-3">
+    <div class="left">
+      <div class="title">Summary</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="row">
+      <div class="col-sm-3 py-2">
+        <div class="kpi">
+          <div class="text-muted">Events</div>
+          <div class="item">
+            <span class="fs-2">{{eventCount$ | async}}</span>
+          </div>
+          <div id="chart">
+            <img src="assets/img/path-5.png" alt="chart">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 py-2">
+        <div class="center-border">
+          <div class="kpi">
+            <div class="text-muted">Assets</div>
+            <div class="item">
+              <span class="fs-2">{{assetCount$ | async}}</span>
+            </div>
+          </div>
+          <div class="bottom">
+            <span class="fs-6 text-muted">Assets with events</span>
+          </div>
+          <div class="thin">
+            <progress max="100" value="{{assetsWithEventsPercentage$ | async}}"></progress>
+          </div>
+          <span class="font-weight-lighter">{{assetsWithEventsPercentage$ | async}}<span class="unit">%</span></span>
+        </div>
+      </div>
+      <div class="col-sm-4 py-2">
+        <div class="center-border">
+          <div class="kpi">
+            <div class="text-muted">Readings</div>
+            <div class="item">
+              <span class="fs-2">{{locationCount$ | async}}</span>
+            </div>
+          </div>
+          <div class="bottom">
+            <span class="fs-6 text-muted">% generated events</span>
+          </div>
+          <div>
+            <progress max="100" value="{{positionGeneratedEventsPercentage$ | async}}"></progress>
+          </div>
+          <span class="font-weight-lighter">{{positionGeneratedEventsPercentage$ | async}}<span class="unit">%</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

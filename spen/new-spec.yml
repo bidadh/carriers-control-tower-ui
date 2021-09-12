@@ -1,0 +1,200 @@
+asyncapi: 2.0.0
+info:
+  title: IoT Events API
+  version: 1.0.0
+  description: This is cathookie webhook API. It uses the ASYNC API Specification - check it out here [https://www.asyncapi.com/docs/specifications/2.0.0]
+  termsOfService: https://webhooks.mycompany.com/terms/
+  contact:
+    name: My Webhook API Support
+    url: https://mysupport.mycompany.com/
+    email: support@mycompany.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  production:
+    # this url is not important. Only really need this section for the security part.
+    url: webhooks.mycompany.com
+    protocol: http
+    description: This is "My Company" webhook instance.
+
+channels:
+  DevicePositionUpdate:
+    description: Receive all device position updates
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  DeviceRoute:
+    description: Receive the route for a device moving from point A to point B
+    subscribe:
+      tags:
+        - name: RouteRequest
+      message:
+        $ref: '#/components/messages/RouteRequest'
+  DeliveredAt:
+    description: Receive when device reaches it's destination
+    subscribe:
+      tags:
+        - name: FinishLegRequest
+      message:
+        $ref: '#/components/messages/FinishLegRequest'
+  TEMPERATURE_APPROACHING:
+    description: When temperature approaching it's target
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  TEMPERATURE_EXCEEDED:
+    description: When temperature exceeded it's target
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  DG_ALERT:
+    description: When there is an alert for an asset
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  SECURITY_ALERT:
+    description: When there is a security alert for an asset
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  PERSONAL_ALERT:
+    description: When there is an alert for an asset
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+  SHOCK:
+    description: When there is a SHOCK alert for an asset
+    subscribe:
+      tags:
+        - name: DevicePositionUpdateRequest
+      message:
+        $ref: '#/components/messages/DevicePositionUpdateRequest'
+components:
+  messages:
+    DevicePositionUpdateRequest:
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - deviceId
+          - enterpriseId
+          - position
+          - properties
+        properties:
+          enterpriseId:
+            type: string
+            example: "enterprise_id"
+          deviceId:
+            type: string
+            example: "device_id"
+          position:
+            type: object
+            properties:
+              x:
+                type: number
+                format: double
+                example: 151.75634
+              "y":
+                type: number
+                format: double
+                example: -123.67676
+              coordinates:
+                type: array
+                items:
+                  type: number
+                  format: double
+                example: [151.75634, -123.67676]
+          properties:
+            type: object
+            example:
+              key1: value1
+              key2: value2
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+    FinishLegRequest:
+      contentType: application/json
+      payload:
+        type: object
+        required:
+          - assetId
+          - enterpriseId
+          - points
+        properties:
+          enterpriseId:
+            type: string
+            example: "enterprise_id"
+          assetId:
+            type: string
+            example: "asset_id"
+          points:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: double
+            example: [[151.75634, -123.67676],[151.214313, -167.67676]]
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+    RouteRequest:
+      contentType: application/json
+      payload:
+        required:
+          - assetId
+          - coordinates
+          - enterpriseId
+          - forceFit
+          - forceFollow
+        type: object
+        properties:
+          enterpriseId:
+            type: string
+            example: "enterprise_id"
+          assetId:
+            type: string
+            example: "asset_id"
+          coordinates:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+                format: double
+            example: [[151.75634, -123.67676],[151.214313, -167.67676]]
+          forceFit:
+            type: boolean
+            example: true
+          forceFollow:
+            type: boolean
+            example: true
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+  messageTraits:
+    commonHeaders:
+      # headers
+      headers:
+        type: object
+        properties:
+          # header name
+          trace-id:
+            type: string
+            format: uuid
+            description: The Trace ID of the original message.
+          span-id:
+            type: string
+            format: uuid
+            description: The Span ID for the specific subscription message.
+

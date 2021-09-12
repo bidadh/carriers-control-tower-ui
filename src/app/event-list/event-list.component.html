@@ -1,0 +1,51 @@
+<div class="bg-{{catStyle}} p-2 mb-1">
+  <div class="row">
+    <div class="col-3">
+      <div class="text-{{textColor}}">Events</div>
+    </div>
+    <div class="col-9">
+      <div class="pull-right">
+        <span class="text-{{textColor}}">Filters:&nbsp;&nbsp;</span>
+        <span class="right">
+          <a class="text-danger" (click)="setFilterToExtreme()">Critical</a>&nbsp; | &nbsp;
+          <a class="text-warning" (click)="setFilterToHigh()">Medium</a>&nbsp; | &nbsp;
+          <a class="text-secondary" (click)="setFilterToNormal()">Normal</a>&nbsp; | &nbsp;
+          <a class="text-success" (click)="setFilterToAll()">All</a>&nbsp;
+        </span>
+      </div>
+      <!--
+          <div class="bottom right">
+            <span class="right color-gray text-sm">Total: </span>
+            <span class="text-lg">{{eventsCount$ | async}}</span>
+          </div>
+      -->
+    </div>
+  </div>
+  <div class="content table-responsive my-3">
+    <table class="table table-sm compact sortable table-{{catStyle}}">
+      <thead>
+      <tr>
+        <th></th>
+        <th class="is-sortable">Asset <a href="#" class="text-dark"><i class="bi bi-chevron-expand"></i></a></th>
+        <th class="is-sortable">Asset Group <a href="#" class="text-dark"><i class="bi bi-chevron-expand"></i></a></th>
+        <th class="is-sortable">Location <a href="#" class="text-dark"><i class="bi bi-chevron-expand"></i></a></th>
+        <th class="is-sortable">Event <a href="#" class="text-dark"><i class="bi bi-chevron-expand"></i></a></th>
+        <th class="is-sortable">Time <a href="#" class="text-dark"><i class="bi bi-chevron-expand"></i></a></th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--suppress TypeScriptUnresolvedFunction, AngularUndefinedBinding -->
+      <tr *ngFor="let event of events$ | async | eventCriticality:filter">
+        <td [innerHTML]="event.style()"></td>
+        <td class="text-sm">{{event.asset.name}}</td>
+        <td class="text-sm">{{event.asset.assetType.name}}</td>
+        <td class="text-sm" *ngIf="event.locations.length > 0">{{event.location()}}</td>
+        <td class="text-sm" *ngIf="event.locations.length === 0"><a class="color-{{event.styleColor()}}" (click)="showOnMap(event)">Show On Map</a></td>
+        <td class="text-sm">{{event.action}}</td>
+        <!--suppress TypeScriptUnresolvedFunction -->
+        <td class="text-sm">{{event.time | date:'medium'}}</td>
+      </tr>
+    </table>
+  </div>
+
+</div>

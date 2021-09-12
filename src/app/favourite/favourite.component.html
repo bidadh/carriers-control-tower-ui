@@ -1,0 +1,46 @@
+<div class="bg-white p-2 mb-1">
+  <div class="row">
+    <div class="col-12 pt-2 pb-3">
+      <div class="pull-left">
+        <div class="title">Favourite Locations</div>
+      </div>
+      <div class="pull-right">
+        <a class="subtle-link text-decoration-none text-dark fs-6" href="#">All Locations</a>
+      </div>
+    </div>
+
+  </div>
+  <div class="content py-2">
+    <div class="row">
+      <div *ngFor="let location of locations$ | async" class="col-sm-12 col-xl-6">
+        <div class="card p-3">
+          <div class="header">
+            <div class="pull-left">
+              <div class="card-title">{{location.name}}</div>
+              <div class="card-subtitle mb-2 text-muted">Active: {{location.lastActive}}</div>
+            </div>
+            <div class="pull-right d-flex align-items-center">
+              <div class="action px-1">
+                <i class="icon {{location.icon()}} fa-1x"></i>
+              </div>
+              <div class="action px-1">
+                <i class="bi bi-gear bi-1x"></i>
+              </div>
+              <div class="action px-1">
+                <i class="bi bi-trash bi-1x"></i>
+              </div>
+            </div>
+          </div>
+          <div class="content bottom">
+            <p>
+              <span class="fs-2">{{location?.numberOfAssets}}</span>
+              <span>&nbsp;&nbsp;</span>
+              <span class="fs-6 text-muted">Assets</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="header">
+  <div class="left">
+    <div class="title">Events</div>
+  </div>
+</div>
+<div class="content">
+  <table class="table dashed compact sortable">
+    <thead>
+    <tr>
+      <th class="is-sortable">Asset</th>
+      <th class="is-sortable">Asset Group</th>
+      <th class="is-sortable">Location</th>
+      <th class="is-sortable">Event</th>
+      <th class="is-sortable">Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let asset of assets$ | async">
+      <td>{{asset.name}}</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </table>
+</div>

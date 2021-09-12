@@ -1,0 +1,12 @@
+.line-gray,.center-border {
+  height: 100%;
+  border-left: solid 2px #767676;
+  padding-left: 15px;
+}
+@media only screen and (max-width: 520px){
+  .center-border {
+    border-left: solid 0px #767676;
+    border-top: solid 2px #767676;
+    padding-left: 0px;
+  }
+}
